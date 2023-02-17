@@ -23,11 +23,6 @@ public class QrCodeController {
         this.qrCodeService2 = qrCodeService2;
     }
 
-//    @PostMapping
-//    public ResponseEntity<HashMap<String, String>> toJson(@RequestBody QrCodeRequest qrCodeRequest) {
-//        return ResponseEntity.status(201).body(qrCodeService.returnToJson(qrCodeRequest));
-//    }
-
     @PostMapping("/to-string")
     public ResponseEntity<String> toString(@RequestBody HashMap<String, String> map) {
         return ResponseEntity.status(201).body(qrCodeService.convertToString(map));

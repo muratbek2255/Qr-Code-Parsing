@@ -65,15 +65,15 @@ public class QrCodeService {
     }
 
     public String convertToString(HashMap<String, String> map) {
-        String value1 = map.get("Name usligi");
-        String value2 = map.get("VersionStandart");
-        String value3 = map.get("Summa");
-        String value4 = map.get("InformationAboutPostavshikaUslug");
-        String value5 = map.get("MSS");
-        String value6 = map.get("TypeOfPayment");
-        String value7 = map.get("Control sum");
+        String value1 = map.get("2.TypeOfPayment");
+        String value2 = map.get("1.VersionStandart");
+        String value3 = map.get("4.InformationAboutMss");
+        String value4 = map.get("3.InformationAboutServiceProvider");
+        String value5 = map.get("5.InformationAboutCurrencyValute");
+        String value6 = map.get("6.AmountPayment");
+        String value7 = map.get("7.InformationAboutControlSumma");
 
-        String s = "https://balance.kg/#" + value1 + value2 + value3 + value4 + value5 + value6 + value7;
+        String s = "https://balance.kg/#" + value2 + value1 + value3 + value4 + value5 + value6 + value7;
 
         return s;
     }

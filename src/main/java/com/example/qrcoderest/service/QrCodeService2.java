@@ -15,13 +15,13 @@ public class QrCodeService2 {
         var result = returnList(qrCodeRequest.getQr_code());
 
         HashMap<String, String> map = new HashMap<>();
-
         map.put("1.VersionStandart", result.get(0).getValue());
-//        map.put("3.InformationAboutServiceProvider", result.get(3).getValue());
-//        map.put("4.InformationAboutMss", result.get(4).getValue());
-//        map.put("5.InformationAboutCurrencyValute", result.get(5).getValue());
-//        map.put("6.AmountPayment", result.get(6).getValue());
-//        map.put("7.InformationAboutControlSumma", result.get(7).getValue());
+        map.put("2.TypeOfPayment", result.get(1).getValue());
+        map.put("3.InformationAboutServiceProvider", result.get(2).getValue());
+        map.put("4.InformationAboutMss", result.get(4).getValue());
+        map.put("5.InformationAboutCurrencyValute", result.get(5).getValue());
+        map.put("6.AmountPayment", result.get(6).getValue());
+        map.put("7.InformationAboutControlSumma", result.get(8).getValue());
         return map;
     }
 
@@ -36,10 +36,11 @@ public class QrCodeService2 {
             System.out.println(planet.length());
             while (yx < planet.length()){
                 var id = planet.substring(yx, yx + 2);
+                System.out.println(id);
                 var len_planet = planet.substring(yx + 2 , yx + 2 + 2);
                 var value_planet = planet.substring(yx + 4, yx + 4 + Integer.parseInt(len_planet));
                 System.out.println(value_planet + "value");
-                yx = yx + 4 + Integer.parseInt(value_planet);
+                yx = yx + 4 + Integer.parseInt(len_planet);
                 System.out.println(yx + "yx");
 
                 var obj = new QrCode(id, value_planet);
@@ -49,7 +50,6 @@ public class QrCodeService2 {
                 if (yx > planet.length()) {
                     break;
                 }
-                yx++;
             }
         }
         return qrCodeList;

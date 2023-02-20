@@ -6,20 +6,17 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@Entity
-@Table(name = "qr_code2", schema = "qr_code_kg")
 public class QrCode {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private String id;
 
-    @Column(name = "name_qr")
+    private String len;
+
     private String value;
 
-    public QrCode(String id, String value) {
+    public QrCode(String id, String len, String value) {
         this.id = id;
+        this.len = len;
         this.value = value;
     }
 

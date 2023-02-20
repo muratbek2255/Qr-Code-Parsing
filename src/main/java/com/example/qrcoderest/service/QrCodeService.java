@@ -1,80 +1,117 @@
 package com.example.qrcoderest.service;
 
 import com.example.qrcoderest.dto.QrCodeRequest;
+import com.example.qrcoderest.entity.QrCode;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
 public class QrCodeService {
 
-    HashMap<String, String> map = new HashMap<>();
+    @Value("${begin.string}")
+    private String beginStr;
 
-    public HashMap<String, String> returnToJson(QrCodeRequest qrCodeRequest) {;
-        if(qrCodeRequest.getQr_code().startsWith("https://balance.kg/#")) {
-            String planet = qrCodeRequest.getQr_code().replace("https://balance.kg/#", "");
-            System.out.println(planet);
-            System.out.println(planet.length());
-            for (int i = 0; i < planet.length() - (planet.length() - 7); i++) {
-                var id_str = planet.substring(i, i + 2);
-                var len_str = planet.substring(i + 2, i + 2 + 2);
-                System.out.println(len_str);
-                var sal_str = planet.substring(i + 4, i + 4 + Integer.parseInt(len_str));
-                var shift = id_str.length() + len_str.length() + sal_str.length();
-                i = shift;
-                System.out.println(sal_str);
-                map.put("1.VersionStandart", sal_str);
+    public HashMap<String, HashMap<String, String>> convertToHashMap(QrCodeRequest qrCodeRequest) {
+        var result = returnList(qrCodeRequest.getQr_code().replace(beginStr, ""));
 
-                var id_str2 = planet.substring(i + 2, i + 4);
-                var len_str2 = planet.substring(i + 2, i + 2 + 2);
-                var sal_str2 = planet.substring(i + 4, i + 4 + Integer.parseInt(len_str2));
-                System.out.println(sal_str2);
-                map.put("2.TypeOfPayment", sal_str2);
+        HashMap<String, HashMap<String, String>> map = new HashMap<>();
 
-                var id_str3 = planet.substring(i + 6, i + 8);
-                var len_str3 = planet.substring(i + 2, i + 2 + 2);
-                var sal_str3 = planet.substring(i + 14, i + 22 + Integer.parseInt(len_str3));
-                map.put("3.InformationAboutServiceProvider", sal_str3);
+        map.put("1.VersionStandart", new HashMap() {{
+            put("1.id", result.get(0).getId());
+        }});
+        map.get("1.VersionStandart").put("2.len", result.get(0).getLen());
+        map.get("1.VersionStandart").put("3.value", result.get(0).getValue());
 
-                var id_str4 = planet.substring(i + 24, i + 26);
-                var len_str4 = planet.substring(i + 2, i + 2 + 2);
-                var sal_str4 = planet.substring(i + 51, i + 53 + Integer.parseInt(len_str4));
-                map.put("4.InformationAboutMss", sal_str4);
+        map.put("2.TypeOfPayment", new HashMap() {{
+            put("1.id", result.get(1).getId());
+        }});
+        map.get("2.TypeOfPayment").put("2.len", result.get(1).getLen());
+        map.get("2.TypeOfPayment").put("3.value", result.get(1).getValue());
 
-                var id_str5 = planet.substring(i + 52, i + 54);
-                var len_str5 = planet.substring(i + 2, i + 2 + 2);
-                var sal_str5 = planet.substring(i + 59, i + 60 + Integer.parseInt(len_str5));
-                System.out.println(sal_str5);
-                map.put("5.InformationAboutCurrencyValute", sal_str5);
+        map.put("3.InformationServiceAb", new HashMap() {{
+            put("1.id", result.get(2).getId());
+        }});
+        map.get("3.InformationServiceAb").put("2.len", result.get(2).getLen());
+        map.get("3.InformationServiceAb").put("3.value", result.get(2).getValue());
 
-                var id_str6 = planet.substring(i + 61, i + 63);
-                var len_str6 = planet.substring(i + 2, i + 2 + 2);
-                var sal_str6 = planet.substring(i + 66, i + 70 + Integer.parseInt(len_str6));
-                System.out.println(sal_str6);
-                map.put("6.AmountPayment", sal_str6);
+        map.put("4", new HashMap() {{
+            put("1.id", result.get(3).getId());
+        }});
+        map.get("4").put("2.len", result.get(3).getValue());
+        map.get("4").put("3.value", result.get(3).getLen());
 
-                var id_str7 = planet.substring(i + 71, i + 73);
-                var len_str7 = planet.substring(i + 2, i + 2 + 2);
-                var sal_str7 = planet.substring(i + 90, i + 92 + Integer.parseInt(len_str7));
-                map.put("7.InformationAboutControlSumma", sal_str7);
-            }
-        }
+        map.put("5.InformationAboutMSS", new HashMap() {{
+            put("1.id", result.get(4).getId());
+        }});
+        map.get("5.InformationAboutMSS").put("2.len", result.get(4).getLen());
+        map.get("5.InformationAboutMSS").put("3.value", result.get(4).getValue());
+
+        map.put("6.Currency", new HashMap() {{
+            put("1.id", result.get(5).getId());
+        }});
+        map.get("6.Currency").put("2.len", result.get(5).getLen());
+        map.get("6.Currency").put("3.value", result.get(5).getValue());
+
+        map.put("7.Sum", new HashMap() {{
+            put("1.id", result.get(6).getId());
+        }});
+        map.get("7.Sum").put("2.len", result.get(6).getLen());
+        map.get("7.Sum").put("3.value", result.get(6).getValue());
+
+        map.put("8.ServiceProvider", new HashMap() {{
+            put("1.id", result.get(7).getId());
+        }});
+        map.get("8.ServiceProvider").put("2.len", result.get(7).getValue());
+        map.get("8.ServiceProvider").put("3.value", result.get(7).getLen());
+
+        map.put("9.InformationCheckControlSumAbout88", new HashMap() {{
+            put("1.id", result.get(8).getId());
+        }});
+        map.get("9.InformationCheckControlSumAbout88").put("2.len", result.get(8).getValue());
+        map.get("9.InformationCheckControlSumAbout88").put("3.value", result.get(8).getLen());
+
         return map;
     }
 
-    public String convertToString(HashMap<String, String> map) {
-        String value1 = map.get("2.TypeOfPayment");
-        String value2 = map.get("1.VersionStandart");
-        String value3 = map.get("4.InformationAboutMss");
-        String value4 = map.get("3.InformationAboutServiceProvider");
-        String value5 = map.get("5.InformationAboutCurrencyValute");
-        String value6 = map.get("6.AmountPayment");
-        String value7 = map.get("7.InformationAboutControlSumma");
+    public String convertToString(HashMap<String, HashMap<String, String>> map) {
 
-        String s = "https://balance.kg/#" + value2 + value1 + value3 + value4 + value5 + value6 + value7;
+        String value = beginStr;
 
-        return s;
+        for (Map.Entry<String, HashMap<String, String>> entry: map.entrySet()) {
+            String nameOfField = entry.getKey();
+            for (Map.Entry<String, String> id_value_entry: entry.getValue().entrySet()) {
+                value+=id_value_entry.getValue();
+            }
+        }
+        return value;
+    }
+
+    public List<QrCode> returnList(String url_str2) {
+
+        List<QrCode> qrCodeList = new ArrayList<>();
+
+        int yx = 0;
+
+        while (yx < url_str2.length()) {
+            var id = url_str2.substring(yx, yx + 2);
+            var len_url_str = url_str2.substring(yx + 2, yx + 2 + 2);
+            var value_url_str = url_str2.substring(yx + 4, yx + 4 + Integer.parseInt(len_url_str));
+            yx = yx + 4 + Integer.parseInt(len_url_str);
+
+            var obj = new QrCode(id, len_url_str, value_url_str);
+
+            qrCodeList.add(obj);
+
+            if (yx > url_str2.length()) {
+                break;
+            }
+        }
+        return qrCodeList;
     }
 }

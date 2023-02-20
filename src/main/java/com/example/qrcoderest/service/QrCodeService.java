@@ -67,14 +67,14 @@ public class QrCodeService {
         map.put("8.ServiceProvider", new HashMap() {{
             put("1.id", result.get(7).getId());
         }});
-        map.get("8.ServiceProvider").put("2.len", result.get(7).getValue());
-        map.get("8.ServiceProvider").put("3.value", result.get(7).getLen());
+        map.get("8.ServiceProvider").put("2.len", result.get(7).getLen());
+        map.get("8.ServiceProvider").put("3.value", result.get(7).getValue());
 
         map.put("9.InformationCheckControlSumAbout88", new HashMap() {{
             put("1.id", result.get(8).getId());
         }});
-        map.get("9.InformationCheckControlSumAbout88").put("2.len", result.get(8).getValue());
-        map.get("9.InformationCheckControlSumAbout88").put("3.value", result.get(8).getLen());
+        map.get("9.InformationCheckControlSumAbout88").put("2.len", result.get(8).getLen());
+        map.get("9.InformationCheckControlSumAbout88").put("3.value", result.get(8).getValue());
 
         return map;
     }
